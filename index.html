@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Table Redirector</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 50px; background:#f4f4f9; }
+    h1 { color: #4a90e2; margin-bottom: 30px; }
+    a { display: inline-block; margin: 10px; padding: 10px 20px; background: #4a90e2; color: #fff; border-radius: 6px; text-decoration: none; transition: background 0.3s; }
+    a:hover { background: #357ABD; }
+    p { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Table Redirects</h1>
+  <div id="links"></div>
+
+  <script>
+    // Словарь: короткая ссылка -> длинная Google таблица
+    const tables = {
+      "rukovodstvo": "https://docs.google.com/spreadsheets/d/1cJUItqYSns6xOralHCrWZ3iBSXeplC37JeM4WH-7Bbw/edit?gid=481778934",
+      "nakazaniya": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMhD03y3SH4bYVL1JlnpDiMPBCMh14x1rxvRsWJCYsP3B_5lMGNpryM66ar3TOTAPplnamevD_PTTs/pubhtml?gid=297370405&single=true"
+    };
+
+    // Получаем путь из URL (например /leadership)
+    const path = window.location.pathname.split("/").pop().toLowerCase();
+
+    if(tables[path]) {
+      // автоматический редирект
+      window.location.href = tables[path];
+    } else {
+      // показываем список ссылок
+      const container = document.getElementById("links");
+      for (let key in tables) {
+        const a = document.createElement("a");
+        a.href = "/" + key;
+        a.textContent = key === "leadership" ? "🐁 Leadership Table" : "🚫 Punishments Table";
+        container.appendChild(a);
+      }
+      const p = document.createElement("p");
+      p.textContent = "Click a link to open the Google Sheet.";
+      container.appendChild(p);
+    }
+  </script>
+</body>
+</html>
