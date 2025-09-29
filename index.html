@@ -1,46 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Table Redirector</title>
-  <style>
-    body { font-family: sans-serif; text-align: center; padding: 50px; background:#f4f4f9; }
-    h1 { color: #4a90e2; margin-bottom: 30px; }
-    a { display: inline-block; margin: 10px; padding: 10px 20px; background: #4a90e2; color: #fff; border-radius: 6px; text-decoration: none; transition: background 0.3s; }
-    a:hover { background: #357ABD; }
-    p { margin-top: 20px; }
-  </style>
+<meta charset="UTF-8">
+<title>Redirect</title>
+<script>
+  const tables = {
+    "leadership": "https://docs.google.com/spreadsheets/d/1cJUItqYSns6xOralHCrWZ3iBSXeplC37JeM4WH-7Bbw/edit?gid=481778934#gid=481778934&range=A1",
+    "punishments": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMhD03y3SH4bYVL1JlnpDiMPBCMh14x1rxvRsWJCYsP3B_5lMGNpryM66ar3TOTAPplnamevD_PTTs/pubhtml?gid=297370405&single=true"
+  };
+
+  const key = new URLSearchParams(window.location.search).get("t");
+
+  if (key && tables[key]) {
+    window.location.replace(tables[key]);
+  }
+  // если ключ не найден — страница остаётся пустой
+</script>
 </head>
-<body>
-  <h1>Table Redirects</h1>
-  <div id="links"></div>
-
-  <script>
-    // Короткая ссылка -> длинная Google таблица
-    const tables = {
-      "leadership": "https://docs.google.com/spreadsheets/d/1cJUItqYSns6xOralHCrWZ3iBSXeplC37JeM4WH-7Bbw/edit?gid=481778934",
-      "punishments": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMhD03y3SH4bYVL1JlnpDiMPBCMh14x1rxvRsWJCYsP3B_5lMGNpryM66ar3TOTAPplnamevD_PTTs/pubhtml?gid=297370405&single=true"
-    };
-
-    const params = new URLSearchParams(window.location.search);
-    const key = params.get("t"); // ?t=leadership или ?t=punishments
-
-    if(key && tables[key]) {
-      // автоматический редирект
-      window.location.href = tables[key];
-    } else {
-      // показываем список кнопок
-      const container = document.getElementById("links");
-      for (let k in tables) {
-        const a = document.createElement("a");
-        a.href = "?t=" + k;
-        a.textContent = k === "leadership" ? "🐁 Leadership Table" : "🚫 Punishments Table";
-        container.appendChild(a);
-      }
-      const p = document.createElement("p");
-      p.textContent = "Click a link to open the Google Sheet.";
-      container.appendChild(p);
-    }
-  </script>
-</body>
 </html>
