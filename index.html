@@ -2,21 +2,33 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Redirect</title>
+<title>Redirector</title>
 <script>
-  const tables = {
-    "leadership": "https://docs.google.com/spreadsheets/d/1cJUItqYSns6xOralHCrWZ3iBSXeplC37JeM4WH-7Bbw/edit?gid=481778934#gid=481778934&range=A1",
-    "punishments": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMhD03y3SH4bYVL1JlnpDiMPBCMh14x1rxvRsWJCYsP3B_5lMGNpryM66ar3TOTAPplnamevD_PTTs/pubhtml?gid=297370405&single=true",
-    "lvfm": "https://forum.sa-mp.ru/index.php?/forum/33-радиоцентр-лв/",
-    "up": "https://forum.sa-mp.ru/index.php?/topic/1199578-lvfm-система-повышения/"
-  };
+const routes = {
+  "leadership": "https://docs.google.com/spreadsheets/d/1cJUItqYSns6xOralHCrWZ3iBSXeplC37JeM4WH-7Bbw/edit?gid=481778934#gid=481778934&range=A1",
+  "punishments": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQMhD03y3SH4bYVL1JlnpDiMPBCMh14x1rxvRsWJCYsP3B_5lMGMpryM66ar3TOTAPplnamevD_PTTs/pubhtml?gid=297370405&single=true",
+  "lvfm": "https://forum.sa-mp.ru/index.php?/forum/33-радиоцентр-лв/",
+  "up": "https://forum.sa-mp.ru/index.php?/topic/1199578-lvfm-система-повышения/"
+};
 
-  const key = new URLSearchParams(window.location.search).get("t");
+// Берем путь из URL вместо параметра
+const path = window.location.pathname.split('/').filter(Boolean).pop();
 
-  if (key && tables[key]) {
-    window.location.replace(tables[key]);
-  }
-  // если ключ не найден — страница остаётся пустой
+if (path && routes[path]) {
+  window.location.replace(routes[path]);
+} else {
+  // Показываем красивую страницу с ссылками если путь не найден
+  document.body.innerHTML = `
+    <div style="text-align: center; padding: 50px; font-family: Arial;">
+      <h1>Available Redirects</h1>
+      ${Object.entries(routes).map(([key, url]) => 
+        `<p><a href="/${key}">/${key}</a> → ${url}</p>`
+      ).join('')}
+    </div>
+  `;
+}
 </script>
 </head>
+<body>
+</body>
 </html>
