@@ -11,13 +11,12 @@
     "up": "https://forum.sa-mp.ru/index.php?/topic/1199578-lvfm-система-повышения/"
   };
 
-  // Берём последний сегмент пути: /redirector/lvfm → "lvfm"
-  const path = location.pathname.split("/").filter(Boolean).pop();
+  const key = new URLSearchParams(window.location.search).get("t");
 
-  if (path && tables[path]) {
-    location.replace(tables[path]);
+  if (key && tables[key]) {
+    window.location.replace(tables[key]);
   }
-  // если ключ не найден — остаётся пустая страница
+  // если ключ не найден — страница остаётся пустой
 </script>
 </head>
 </html>
